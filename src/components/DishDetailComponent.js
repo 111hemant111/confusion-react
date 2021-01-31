@@ -1,15 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
-class DishDetail extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-        }
-    }
-
-    renderDish(dish){
+    function RenderDish({dish}){
         if (dish != null) {
             return(
                 <div key={dish.id}>
@@ -30,9 +22,9 @@ class DishDetail extends Component {
         }
     }
 
-    renderComments(comment){
+    function RenderComments({comment}){
         if (comment != null) {
-
+            
             const date = new Date(comment.date);
             let monthArray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
             let formattedDate = "" + date.getDate();
@@ -41,14 +33,14 @@ class DishDetail extends Component {
             {
                 formattedDate = "0" + formattedDate;
             }
-                
+           
             return(
-                <div key={comment.id}>
-                        <CardTitle>{comment.comment}</CardTitle>
-                        <CardTitle>{"-- " + comment.author + ", " 
-                                            + monthArray[date.getMonth()] + " " 
-                                                + formattedDate + ", " 
-                                                    + date.getFullYear()}</CardTitle>
+                <div>
+                    <CardTitle>{comment.comment}</CardTitle>
+                    <CardTitle>{"-- " + comment.author + ", " 
+                                        + monthArray[date.getMonth()] + " " 
+                                            + formattedDate + ", " 
+                                                + date.getFullYear()}</CardTitle>
                 </div>
             );
         }
@@ -59,20 +51,25 @@ class DishDetail extends Component {
         }
     }
 
-    render(){
+    const DishDetail = (props) => {
 
-        let selectedDish = this.props.dish;
+        console.log('Dishdetail Component render invoked');
+        let selectedDish = props.dish;
 
         if (selectedDish != null){
             return(
                     <div className="container">
                         <div className="row">
                             <div className="col-12 col-md-5 m-1">
-                                {this.renderDish(selectedDish)}
+                                <RenderDish dish = {props.dish} />
                             </div>
                             <div className="col-12 col-md-5 m-1">
                                 <CardTitle><h3>Comments</h3></CardTitle>
-                                {selectedDish.comments.map((comment) => {return (this.renderComments(comment));})}
+                                {selectedDish.comments.map((comment) => {return (
+                                    <div key={comment.id}>
+                                        <RenderComments comment = {comment}/>
+                                    </div>
+                                    );})}
                             </div>
                         </div>
                     </div>
@@ -87,6 +84,5 @@ class DishDetail extends Component {
         }  
         
     }
-}
 
 export default DishDetail;
