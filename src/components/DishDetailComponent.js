@@ -32,9 +32,11 @@ class DishDetail extends Component {
 
     renderComments(comment){
         if (comment != null) {
+
             const date = new Date(comment.date);
             let monthArray = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
             let formattedDate = "" + date.getDate();
+            
             if (formattedDate.length === 1)
             {
                 formattedDate = "0" + formattedDate;
@@ -43,7 +45,10 @@ class DishDetail extends Component {
             return(
                 <div key={comment.id}>
                         <CardTitle>{comment.comment}</CardTitle>
-                        <CardTitle>{"-- " + comment.author + ", " + monthArray[date.getMonth()] + " " + formattedDate + " " + date.getFullYear()}</CardTitle>
+                        <CardTitle>{"-- " + comment.author + ", " 
+                                            + monthArray[date.getMonth()] + " " 
+                                                + formattedDate + ", " 
+                                                    + date.getFullYear()}</CardTitle>
                 </div>
             );
         }
@@ -56,7 +61,7 @@ class DishDetail extends Component {
 
     render(){
 
-        let selectedDish = this.props.dishSelectionProp;
+        let selectedDish = this.props.dish;
 
         if (selectedDish != null){
             return(
@@ -79,8 +84,7 @@ class DishDetail extends Component {
             return(
                 <div></div>
             );
-        }
-            
+        }  
         
     }
 }
