@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle, BreadcrumbItem, Breadcrumb } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
     function RenderDish({dish}){
         if (dish != null) {
@@ -52,20 +53,29 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
     }
 
     const DishDetail = (props) => {
-
-        console.log('Dishdetail Component render invoked');
         let selectedDish = props.dish;
-
+        console.log(selectedDish);
+        console.log(props.comments);
         if (selectedDish != null){
             return(
                     <div className="container">
                         <div className="row">
+                            <Breadcrumb>
+                                <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                                <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                            </Breadcrumb>
+                            <div className="col-12">
+                                <h3>{props.dish.name}</h3>
+                                <hr />
+                            </div>
+                        </div>
+                        <div className="row">
                             <div className="col-12 col-md-5 m-1">
-                                <RenderDish dish = {props.dish} />
+                                <RenderDish dish = {selectedDish} />
                             </div>
                             <div className="col-12 col-md-5 m-1">
                                 <CardTitle><h3>Comments</h3></CardTitle>
-                                {selectedDish.comments.map((comment) => {return (
+                                {props.comments.map((comment) => {return (
                                     <div key={comment.id}>
                                         <RenderComments comment = {comment}/>
                                     </div>
